@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "oportunidade_requisitps")
+@Table(name = "oportunidade_requisitos")
 public class OportunidadeRequisitos extends CargoCompetenciasGenerico {
     private Double pesoHabilidades;
     private Double pesoIdiomas;
