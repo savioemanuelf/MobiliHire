@@ -2,8 +2,10 @@ package com.mobilihire.mobility.domain.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import com.smarthirepro.domain.model.Empresa;
 import com.smarthirepro.domain.repositories.CargoRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,14 +16,16 @@ import com.mobilihire.mobility.domain.model.OportunidadeInterna;
 
 @Repository
 public interface OportunidadeInternaRepositoryJpa extends JpaRepository<OportunidadeInterna, UUID>, CargoRepository<OportunidadeInterna> {
-
-    List<OportunidadeInterna> findByEmpresaId(UUID empresaId);
+    @Override
+    Optional<OportunidadeInterna> findById(UUID empresaId);
 
     List<OportunidadeInterna> findByTipoMobilidade(String tipoMobilidade);
 
     List<OportunidadeInterna> findByDepartamentoOrigem(String departamentoOrigem);
 
     List<OportunidadeInterna> findByDepartamentoDestino(String departamentoDestino);
+
+    List<OportunidadeInterna> findByEmpresaId(UUID empresaId);
 
     @Query("SELECT o FROM OportunidadeInterna o WHERE o.departamentoOrigem = :departamento OR o.departamentoDestino = :departamento")
     List<OportunidadeInterna> findByDepartamento(@Param("departamento") String departamento);
@@ -35,4 +39,6 @@ public interface OportunidadeInternaRepositoryJpa extends JpaRepository<Oportuni
 
     @Query("SELECT o FROM OportunidadeInterna o WHERE o.isActive = true AND o.departamentoOrigem = :departamento")
     List<OportunidadeInterna> findActiveByDepartamentoOrigem(@Param("departamento") String departamento);
+
+    void deleteAllByEmpresa(Empresa empresa);
 }

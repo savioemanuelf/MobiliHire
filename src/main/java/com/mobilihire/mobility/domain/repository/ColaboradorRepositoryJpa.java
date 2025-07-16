@@ -2,6 +2,7 @@ package com.mobilihire.mobility.domain.repository;
 import com.mobilihire.mobility.domain.model.Colaborador;
 import com.smarthirepro.domain.repositories.CandidatoRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,10 @@ import java.util.UUID;
 
 @Repository
 public interface ColaboradorRepositoryJpa extends JpaRepository<Colaborador, UUID>, CandidatoRepository {
+
+    @Modifying
+    @Query(value = "UPDATE candidato SET dtype = 'Colaborador' WHERE dtype = 'Candidato'", nativeQuery = true)
+    void promoverTodosParaColaborador();
 
     List<Colaborador> findByCargo_Id(UUID cargoId);
 
