@@ -1,20 +1,12 @@
 package com.mobilihire.mobility.domain.model;
 
 import com.smarthirepro.domain.model.Candidato;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Colaborador extends Candidato {
 
     @Column(name = "matricula")
@@ -29,24 +21,46 @@ public class Colaborador extends Candidato {
     @Column(name = "nivel_atual")
     private String nivelAtual;
 
-    @Column(name = "data_admissao")
-    private String dataAdmissao;
-
-    @Column(name = "gestor_direto")
-    private String gestorDireto;
-
-    @Column(name = "tempo_empresa")
-    private Integer tempoEmpresa; // em meses
-
     @Column(name = "avaliacao_desempenho")
-    private Double avaliacaoDesempenho; // 0.0 a 5.0
+    private Double avaliacaoDesempenho;
 
-    @Column(name = "historico_mobilidade")
-    private String historicoMobilidade; // JSON com histórico de mobilidades
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-    @Column(name = "interesse_mobilidade")
-    private Boolean interesseMobilidade;
+    public void setDepartamentoAtual(String departamentoAtual) {
+        this.departamentoAtual = departamentoAtual;
+    }
 
-    @Column(name = "areas_interesse")
-    private String areasInteresse; // JSON com áreas de interesse
+    public void setCargoAtual(String cargoAtual) {
+        this.cargoAtual = cargoAtual;
+    }
+
+    public void setNivelAtual(String nivelAtual) {
+        this.nivelAtual = nivelAtual;
+    }
+
+    public void setAvaliacaoDesempenho(Double avaliacaoDesempenho) {
+        this.avaliacaoDesempenho = avaliacaoDesempenho;
+    }
+
+    public String getMatricula() {
+        return this.matricula;
+    }
+
+    public String getDepartamentoAtual() {
+        return this.departamentoAtual;
+    }
+
+    public String getCargoAtual() {
+        return this.cargoAtual;
+    }
+
+    public String getNivelAtual() {
+        return this.nivelAtual;
+    }
+
+    public Double getAvaliacaoDesempenho() {
+        return this.avaliacaoDesempenho;
+    }
 }
