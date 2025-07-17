@@ -1,8 +1,12 @@
 package com.mobilihire.mobility.controller;
 
+import com.mobilihire.mobility.domain.DTO.MobilidadeAvaliacaoDTO;
 import com.mobilihire.mobility.domain.DTO.OportunidadeInternaDto;
 import com.mobilihire.mobility.domain.DTO.OportunidadeInternaRespostaDto;
 import com.mobilihire.mobility.domain.model.OportunidadeInterna;
+import com.mobilihire.mobility.service.AnaliseService;
+import com.mobilihire.mobility.service.AvaliacaoMobilidadePromptService;
+import com.mobilihire.mobility.service.MobilidadeAvaliacaoService;
 import com.mobilihire.mobility.service.OportunidadeInternaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,14 @@ public class OportunidadeInternaController {
 
     @Autowired
     private OportunidadeInternaService oportunidadeService;
+    @Autowired
+    private AnaliseService analiseService;
+//    @Autowired
+//    private AvaliacaoMobilidadePromptService mobilidadeAvaliacaoService;
+    @Autowired
+    private MobilidadeAvaliacaoService mobilidadeAvaliacaoService;
+
+
 
     @GetMapping
     public ResponseEntity<List<OportunidadeInternaRespostaDto>> listarOportunidadesDaEmpresa() {
@@ -36,6 +48,19 @@ public class OportunidadeInternaController {
     public ResponseEntity<?> adicionarOportunidade(@Valid @RequestBody OportunidadeInternaDto dto) {
         oportunidadeService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @PostMapping("/{id}/compatibilidade")
+    public ResponseEntity<String> compatibilidade(@PathVariable UUID id) {
+        return ResponseEntity.ok(analiseService.realizarAnalise(id));
+    }
+
+    @PostMapping("/{oportunidadeId}/colaboradores/{colaboradorId}/avaliar")
+    public ResponseEntity<MobilidadeAvaliacaoDTO> avaliarColaboradorParaOportunidade(
+            @PathVariable UUID oportunidadeId,
+            @PathVariable UUID colaboradorId) {
+
+        MobilidadeAvaliacaoDTO avaliacao = mobilidadeAvaliacaoService.realizarAvaliacao(oportunidadeId, colaboradorId);
+        return ResponseEntity.ok(avaliacao);
     }
 
     @DeleteMapping("/{id}")

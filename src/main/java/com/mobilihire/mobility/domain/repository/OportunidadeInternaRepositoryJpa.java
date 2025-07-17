@@ -17,7 +17,7 @@ import com.mobilihire.mobility.domain.model.OportunidadeInterna;
 @Repository
 public interface OportunidadeInternaRepositoryJpa extends JpaRepository<OportunidadeInterna, UUID>, CargoRepository<OportunidadeInterna> {
     @Override
-    Optional<OportunidadeInterna> findById(UUID empresaId);
+    Optional<OportunidadeInterna> findById(UUID id);
 
     List<OportunidadeInterna> findByTipoMobilidade(String tipoMobilidade);
 
