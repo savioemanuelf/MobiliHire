@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Plus, Users, TrendingUp, Calendar, ArrowLeft } from "lucide-react"
+import { Plus, Users, TrendingUp, Calendar, ArrowLeft, Upload } from "lucide-react"
 import Link from "next/link"
 import { mobilihireApi, OportunidadeInterna } from "@/api/mobilihire.api"
 import { useRouter } from "next/navigation"
@@ -101,7 +101,7 @@ export default function OportunidadesPage() {
                   Prazo: {oportunidade.prazoCandidatura} dias
                 </div>
                 
-                <div className="flex gap-2 pt-2">
+                <div className="flex gap-2 pt-2 items-center">
                   <Button 
                     variant="outline" 
                     size="sm"
@@ -110,19 +110,43 @@ export default function OportunidadesPage() {
                     Ver Detalhes
                   </Button>
                   <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => router.push(`/oportunidades/${oportunidade.id}/analisar`)}
-                  >
-                    Analisar
-                  </Button>
-                  <Button 
                     variant="destructive" 
                     size="sm"
                     onClick={() => handleDelete(oportunidade.id)}
                   >
                     Excluir
                   </Button>
+                  {}
+                  <input
+                    id={`file-upload-${oportunidade.id}`}
+                    type="file"
+                    accept="application/zip"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        try {
+                          await mobilihireApi.analisarCurriculos(oportunidade.id, file);
+                          alert("Arquivo enviado e análise iniciada com sucesso!");
+                        } catch (error: any) {
+                          alert("Erro ao enviar/analisar o arquivo: " + (error?.message || error));
+                        }
+                        e.target.value = "";
+                      }
+                    }}
+                  />
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="default"
+                      size="sm"
+                      onClick={() => document.getElementById(`file-upload-${oportunidade.id}`)?.click()}
+                      title="Enviar currículos (.zip) para análise"
+                      className="flex items-center gap-2 px-3 py-2"
+                    >
+                      <Upload className="h-4 w-4" />
+                      <span className="text-primary-foreground text-sm font-medium whitespace-nowrap">Adicionar colaboradores</span>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </CardContent>

@@ -106,7 +106,7 @@ export default function NovaOportunidadePage() {
 
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
         <div className="grid gap-6 md:grid-cols-2">
-          {/* Informações Básicas */}
+          {}
           <Card>
             <CardHeader>
               <CardTitle>Informações Básicas</CardTitle>
@@ -177,7 +177,7 @@ export default function NovaOportunidadePage() {
             </CardContent>
           </Card>
 
-          {/* Departamentos e Níveis */}
+          {}
           <Card>
             <CardHeader>
               <CardTitle>Departamentos e Níveis</CardTitle>
@@ -246,7 +246,7 @@ export default function NovaOportunidadePage() {
             </CardContent>
           </Card>
 
-          {/* Requisitos */}
+          {}
           <Card>
             <CardHeader>
               <CardTitle>Requisitos</CardTitle>
@@ -299,7 +299,7 @@ export default function NovaOportunidadePage() {
             </CardContent>
           </Card>
 
-          {/* Pesos e Pontuação */}
+          {}
           <Card>
             <CardHeader>
               <CardTitle>Pesos e Avaliação</CardTitle>
