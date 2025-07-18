@@ -3,9 +3,9 @@
 import { Empresa } from "@/api/empresa.api"
 import { mobilihireApi } from "@/api/mobilihire.api"
 import { CrudSection } from "@/components/crud/crud-section"
-import { DashboardHeader } from "@/components/dashboard/dashboard-header"
-import { DashboardShell } from "@/components/dashboard/dashboard-shell"
-import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar"
+import { DashboardHeader } from "@/components/painel/dashboard-header"
+import { DashboardShell } from "@/components/painel/dashboard-shell"
+import { DashboardSidebar } from "@/components/painel/dashboard-sidebar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
@@ -116,91 +116,4 @@ async function apagarEmpresa() {
     const response = await fetch("http://localhost:8080/empresas", {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.ok) {
-      console.log("Empresa removida com sucesso");
-      alert("Empresa removida do sistema.");
-      
-      window.location.href = "/auth/login";
-    } else {
-      console.error("Erro ao remover empresa");
-      alert("Erro ao remover empresa.");
-    }
-  } catch (error) {
-    console.error("Erro ao apagar empresa:", error);
-    alert("Erro inesperado ao tentar excluir a empresa.");
-  }
-}
-
-
-  return (
-    <DashboardShell>
-      <DashboardHeader heading="Área do Administrador" text="Gerencie as empresas cadastradas na plataforma." />
-      <div className="flex flex-col gap-8 md:flex-row py-10">
-        <DashboardSidebar items={sidebarItems} />
-        <div className="flex-1 space-y-8">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Oportunidades</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">Oportunidades</div>
-                <p className="text-xs text-muted-foreground">Crie e gerencie oportunidades de mobilidade interna</p>
-                <div className="mt-4">
-                  <Link href="/oportunidades">
-                    <Button>Acessar</Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Currículos</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">Candidatos</div>
-                <p className="text-xs text-muted-foreground">Analise currículos com inteligência artificial</p>
-                <div className="mt-4">
-                  <Link href="/curriculos">
-                    <Button>Acessar</Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-  
-          <CrudSection
-            id="atualizar"
-            title="Atualizar dados cadastrais"
-            description="Atualize os dados da sua empresa."
-            fields={[
-              { name: "nome", label: "Nome da Empresa", type: "text", required: false },
-              { name: "cnpj", label: "CNPJ", type: "text", required: false },
-              { name: "telefone", label: "Telefone", type: "text", required: false },
-              { name: "email", label: "Email", type: "email", required: false },
-              { name: "senha", label: "Senha", type: "password", required: false },
-            ]}
-            submitLabel="Atualizar Empresa"
-            onSubmit={atualizarEmpresa}
-            initialValues={empresa}
-          />
-
-          
-          <CrudSection
-            id="apagar"
-            title="Apagar dados de empresa"
-            description="Selecione uma empresa para remover do sistema."
-            fields={[]}
-            submitLabel="Apagar Empresa"
-            onSubmit={apagarEmpresa}
-            isDanger={true}
-          />
-        </div>
-      </div>
-    </DashboardShell>
-  )
-}
+        Authorization: `

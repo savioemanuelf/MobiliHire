@@ -26,7 +26,7 @@ export default function LoginPage() {
       
       console.log("Empresa logada:", result);
       alert("Empresa logada com sucesso!");
-      router.push("/dashboard");
+      window.location.href = "/painel";
 
     } catch (error) {
       console.error("Erro ao logar empresa:", error);

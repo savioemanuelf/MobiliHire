@@ -71,9 +71,6 @@ export default function AnalisarCompatibilidadePage() {
             <TrendingUp className="h-5 w-5" />
             Teste de Compatibilidade
           </CardTitle>
-          <CardDescription>
-            Endpoint: POST /oportunidades-internas/&#123;OPORTUNIDADE_ID&#125;/compatibilidade
-          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>

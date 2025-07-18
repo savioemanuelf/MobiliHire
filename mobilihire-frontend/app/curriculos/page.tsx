@@ -1,9 +1,9 @@
 "use client"
 
 import { CrudSection } from "@/components/crud/crud-section"
-import { DashboardHeader } from "@/components/dashboard/dashboard-header"
-import { DashboardShell } from "@/components/dashboard/dashboard-shell"
-import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar"
+import { DashboardHeader } from "@/components/painel/dashboard-header"
+import { DashboardShell } from "@/components/painel/dashboard-shell"
+import { DashboardSidebar } from "@/components/painel/dashboard-sidebar"
 
 export default function CurriculosPage() {
   const sidebarItems = [
