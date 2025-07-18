@@ -55,6 +55,47 @@ export default function NovaOportunidadePage() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
+  // Função para garantir que a soma dos pesos seja 1
+  const handlePesoChange = (field: keyof OportunidadeInternaCreate, value: number) => {
+    // Lista dos campos de peso
+    const pesoFields: (keyof OportunidadeInternaCreate)[] = [
+      "pesoHabilidades",
+      "pesoIdiomas",
+      "pesoFormacaoAcademica",
+      "pesoExperiencia"
+    ];
+    // Soma dos outros pesos
+    const outros = pesoFields.filter(f => f !== field);
+    const somaOutros = outros.reduce((acc, f) => acc + (formData[f] as number), 0);
+    let novoValor = value;
+    // Limitar valor entre 0 e 1
+    if (novoValor < 0) novoValor = 0;
+    if (novoValor > 1) novoValor = 1;
+    // Se a soma passar de 1, ajustar proporcionalmente os outros
+    let novaSoma = novoValor + somaOutros;
+    let novoFormData = { ...formData, [field]: novoValor };
+    if (novaSoma > 1) {
+      const excesso = novaSoma - 1;
+      // Reduzir proporcionalmente os outros pesos
+      outros.forEach(f => {
+        let atual = novoFormData[f] as number;
+        let reduzido = atual - (excesso * (atual / somaOutros));
+        if (reduzido < 0) reduzido = 0;
+        novoFormData[f] = parseFloat(reduzido.toFixed(2));
+      });
+      novoFormData[field] = parseFloat(novoValor.toFixed(2));
+    }
+    setFormData(novoFormData);
+  };
+
+  // Soma dos pesos para exibir aviso
+  const somaPesos =
+    (formData.pesoHabilidades || 0) +
+    (formData.pesoIdiomas || 0) +
+    (formData.pesoFormacaoAcademica || 0) +
+    (formData.pesoExperiencia || 0);
+  const somaValida = Math.abs(somaPesos - 1) < 0.01;
+
   return (
     <div className="container mx-auto p-6">
       <div className="flex items-center gap-4 mb-6">
@@ -275,56 +316,62 @@ export default function NovaOportunidadePage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="pesoHabilidades">Peso Habilidades ({formData.pesoHabilidades * 100}%)</Label>
+                <Label htmlFor="pesoHabilidades">Peso Habilidades ({formData.pesoHabilidades})</Label>
                 <Input
                   id="pesoHabilidades"
-                  type="range"
+                  type="number"
                   min="0"
                   max="1"
-                  step="0.1"
+                  step="0.01"
                   value={formData.pesoHabilidades}
-                  onChange={(e) => handleInputChange("pesoHabilidades", parseFloat(e.target.value))}
+                  onChange={(e) => handlePesoChange("pesoHabilidades", parseFloat(e.target.value) || 0)}
                 />
               </div>
 
               <div>
-                <Label htmlFor="pesoIdiomas">Peso Idiomas ({formData.pesoIdiomas * 100}%)</Label>
+                <Label htmlFor="pesoIdiomas">Peso Idiomas ({formData.pesoIdiomas})</Label>
                 <Input
                   id="pesoIdiomas"
-                  type="range"
+                  type="number"
                   min="0"
                   max="1"
-                  step="0.1"
+                  step="0.01"
                   value={formData.pesoIdiomas}
-                  onChange={(e) => handleInputChange("pesoIdiomas", parseFloat(e.target.value))}
+                  onChange={(e) => handlePesoChange("pesoIdiomas", parseFloat(e.target.value) || 0)}
                 />
               </div>
 
               <div>
-                <Label htmlFor="pesoFormacaoAcademica">Peso Formação ({formData.pesoFormacaoAcademica * 100}%)</Label>
+                <Label htmlFor="pesoFormacaoAcademica">Peso Formação ({formData.pesoFormacaoAcademica})</Label>
                 <Input
                   id="pesoFormacaoAcademica"
-                  type="range"
+                  type="number"
                   min="0"
                   max="1"
-                  step="0.1"
+                  step="0.01"
                   value={formData.pesoFormacaoAcademica}
-                  onChange={(e) => handleInputChange("pesoFormacaoAcademica", parseFloat(e.target.value))}
+                  onChange={(e) => handlePesoChange("pesoFormacaoAcademica", parseFloat(e.target.value) || 0)}
                 />
               </div>
 
               <div>
-                <Label htmlFor="pesoExperiencia">Peso Experiência ({formData.pesoExperiencia * 100}%)</Label>
+                <Label htmlFor="pesoExperiencia">Peso Experiência ({formData.pesoExperiencia})</Label>
                 <Input
                   id="pesoExperiencia"
-                  type="range"
+                  type="number"
                   min="0"
                   max="1"
-                  step="0.1"
+                  step="0.01"
                   value={formData.pesoExperiencia}
-                  onChange={(e) => handleInputChange("pesoExperiencia", parseFloat(e.target.value))}
+                  onChange={(e) => handlePesoChange("pesoExperiencia", parseFloat(e.target.value) || 0)}
                 />
               </div>
+
+              {!somaValida && (
+                <div className="text-red-600 font-semibold">
+                  A soma dos pesos deve ser igual a 1. (Atual: {somaPesos.toFixed(2)})
+                </div>
+              )}
 
               <div>
                 <Label htmlFor="pontuacaoMinima">Pontuação Mínima ({formData.pontuacaoMinima * 100}%)</Label>

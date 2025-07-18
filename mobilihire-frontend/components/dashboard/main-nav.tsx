@@ -27,11 +27,6 @@ export function MainNav() {
             Área do Administrador
           </Button>
         </Link>
-        <Link href="/vagas">
-          <Button variant={pathname.startsWith("/vagas") ? "default" : "ghost"} className="h-8 px-3">
-            Vagas
-          </Button>
-        </Link>
         <Link href="/curriculos">
           <Button variant={pathname.startsWith("/curriculos") ? "default" : "ghost"} className="h-8 px-3">
             Análise de Currículos
