@@ -153,11 +153,11 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">Análise de Compatibilidade</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">Avaliar</div>
-            <p className="text-xs text-muted-foreground">Analise compatibilidade de colaboradores com IA</p>
+            <div className="text-2xl font-bold">Analisar</div>
+            <p className="text-xs text-muted-foreground">Analise a compatibilidade de colaboradores com oportunidades</p>
             <div className="mt-4">
-              <Link href="/curriculos">
-                <Button>Acessar</Button>
+              <Link href="/analisar-compatibilidade">
+                <Button>Analisar</Button>
               </Link>
             </div>
           </CardContent>
