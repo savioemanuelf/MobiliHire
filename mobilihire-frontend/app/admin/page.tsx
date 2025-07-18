@@ -1,6 +1,7 @@
 "use client"
 
 import { Empresa } from "@/api/empresa.api"
+import { mobilihireApi } from "@/api/mobilihire.api"
 import { CrudSection } from "@/components/crud/crud-section"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { DashboardShell } from "@/components/dashboard/dashboard-shell"
@@ -13,7 +14,7 @@ import { useEffect, useState } from "react"
 export default function AdminPage() {
   const API_URL = "http://localhost:8080/empresas";
   const [empresas, setEmpresas] = useState<Empresa[]>([]);
-  const [empresa, setEmpresa ] = useState<Empresa>({nome: "", cnpj: "", telefone: "", email: "", senha: "" });
+  const [empresa, setEmpresa] = useState<any>({ nome: "", cnpj: "", telefone: "", email: "", senha: "" });
   const [empresaBuscada, setEmpresaBuscada] = useState<Empresa | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
@@ -32,8 +33,22 @@ export default function AdminPage() {
       setToken(cookieToken || null);
       console.log("Cookies atuais: ", document.cookie);
       console.log("Este é o token extraído: ", cookieToken);
-        }
-    }, []);
+    }
+  }, []);
+
+  // Buscar dados da empresa autenticada para pré-preencher
+  useEffect(() => {
+    if (!token) return;
+    mobilihireApi.getEmpresa().then((data) => {
+      setEmpresa({
+        nome: data.nome || "",
+        cnpj: data.cnpj || "",
+        telefone: data.telefone || "",
+        email: data.email || "",
+        senha: ""
+      });
+    });
+  }, [token]);
 
     useEffect(() => {
         if (!token) {
@@ -131,13 +146,13 @@ async function apagarEmpresa() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Vagas</CardTitle>
+                <CardTitle className="text-sm font-medium">Oportunidades</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">Oportunidades</div>
-                <p className="text-xs text-muted-foreground">Crie e gerencie vagas de emprego</p>
+                <p className="text-xs text-muted-foreground">Crie e gerencie oportunidades de mobilidade interna</p>
                 <div className="mt-4">
-                  <Link href="/vagas">
+                  <Link href="/oportunidades">
                     <Button>Acessar</Button>
                   </Link>
                 </div>
@@ -162,7 +177,7 @@ async function apagarEmpresa() {
           <CrudSection
             id="atualizar"
             title="Atualizar dados cadastrais"
-            description="Selecione uma empresa e atualize seus dados."
+            description="Atualize os dados da sua empresa."
             fields={[
               { name: "nome", label: "Nome da Empresa", type: "text", required: false },
               { name: "cnpj", label: "CNPJ", type: "text", required: false },
@@ -172,6 +187,7 @@ async function apagarEmpresa() {
             ]}
             submitLabel="Atualizar Empresa"
             onSubmit={atualizarEmpresa}
+            initialValues={empresa}
           />
 
           

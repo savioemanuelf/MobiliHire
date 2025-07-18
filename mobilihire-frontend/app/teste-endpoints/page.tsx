@@ -15,7 +15,8 @@ import {
   Clock,
   AlertTriangle,
   Lightbulb,
-  Target
+  Target,
+  ArrowLeft
 } from 'lucide-react';
 import { 
   mobilihireApi,
@@ -105,11 +106,17 @@ export default function TesteEndpointsPage() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">Teste de Endpoints</h1>
-        <p className="text-muted-foreground">
-          Teste os endpoints específicos do MobiliHire
-        </p>
+      <div className="flex items-center gap-4 mb-6">
+        <Button variant="outline" size="sm" onClick={() => window.history.back()}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Voltar
+        </Button>
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">Teste de Endpoints</h1>
+          <p className="text-muted-foreground">
+            Teste os endpoints específicos do MobiliHire
+          </p>
+        </div>
       </div>
 
       {/* Cards de Teste */}

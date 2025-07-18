@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { TrendingUp, CheckCircle, XCircle, Clock, Users } from 'lucide-react';
+import { TrendingUp, CheckCircle, XCircle, Clock, Users, ArrowLeft } from 'lucide-react';
 import { mobilihireApi, OportunidadeInterna } from '@/api/mobilihire.api';
 
 export default function AnalisarCompatibilidadePage() {
@@ -53,11 +53,17 @@ export default function AnalisarCompatibilidadePage() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">Análise de Compatibilidade</h1>
-        <p className="text-muted-foreground">
-          Selecione uma oportunidade para ver a compatibilidade dos colaboradores
-        </p>
+      <div className="flex items-center gap-4 mb-6">
+        <Button variant="outline" size="sm" onClick={() => window.history.back()}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Voltar
+        </Button>
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">Análise de Compatibilidade</h1>
+          <p className="text-muted-foreground">
+            Selecione uma oportunidade para ver a compatibilidade dos colaboradores
+          </p>
+        </div>
       </div>
       <Card>
         <CardHeader>

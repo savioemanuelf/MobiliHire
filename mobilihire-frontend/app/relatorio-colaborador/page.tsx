@@ -15,7 +15,8 @@ import {
   AlertTriangle,
   Lightbulb,
   Target,
-  FileText
+  FileText,
+  ArrowLeft
 } from 'lucide-react';
 import { 
   mobilihireApi,
@@ -89,11 +90,17 @@ export default function RelatorioColaboradorPage() {
 
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">Relatório de Colaborador</h1>
-        <p className="text-muted-foreground">
-          Gere relatórios detalhados de mobilidade interna para colaboradores
-        </p>
+      <div className="flex items-center gap-4 mb-6">
+        <Button variant="outline" size="sm" onClick={() => window.history.back()}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Voltar
+        </Button>
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">Relatório de Colaborador</h1>
+          <p className="text-muted-foreground">
+            Gere relatórios detalhados de mobilidade interna para colaboradores
+          </p>
+        </div>
       </div>
 
       {/* Seleção de Dados */}
