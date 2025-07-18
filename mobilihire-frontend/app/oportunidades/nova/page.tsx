@@ -55,28 +55,22 @@ export default function NovaOportunidadePage() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  // Função para garantir que a soma dos pesos seja 1
   const handlePesoChange = (field: keyof OportunidadeInternaCreate, value: number) => {
-    // Lista dos campos de peso
     const pesoFields: (keyof OportunidadeInternaCreate)[] = [
       "pesoHabilidades",
       "pesoIdiomas",
       "pesoFormacaoAcademica",
       "pesoExperiencia"
     ];
-    // Soma dos outros pesos
     const outros = pesoFields.filter(f => f !== field);
     const somaOutros = outros.reduce((acc, f) => acc + (formData[f] as number), 0);
     let novoValor = value;
-    // Limitar valor entre 0 e 1
     if (novoValor < 0) novoValor = 0;
     if (novoValor > 1) novoValor = 1;
-    // Se a soma passar de 1, ajustar proporcionalmente os outros
     let novaSoma = novoValor + somaOutros;
     let novoFormData = { ...formData, [field]: novoValor };
     if (novaSoma > 1) {
       const excesso = novaSoma - 1;
-      // Reduzir proporcionalmente os outros pesos
       outros.forEach(f => {
         let atual = novoFormData[f] as number;
         let reduzido = atual - (excesso * (atual / somaOutros));
@@ -88,7 +82,6 @@ export default function NovaOportunidadePage() {
     setFormData(novoFormData);
   };
 
-  // Soma dos pesos para exibir aviso
   const somaPesos =
     (formData.pesoHabilidades || 0) +
     (formData.pesoIdiomas || 0) +

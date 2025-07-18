@@ -36,7 +36,6 @@ export default function AdminPage() {
     }
   }, []);
 
-  // Buscar dados da empresa autenticada para pré-preencher
   useEffect(() => {
     if (!token) return;
     mobilihireApi.getEmpresa().then((data) => {

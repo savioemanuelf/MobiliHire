@@ -21,7 +21,6 @@ const candidateFunnelData = [
   { stage: "hired", label: "Contratado", count: 10, fill: "var(--color-hired)" },
 ];
 
-// configuração do gráfico (chart config)
 const funnelChartConfig = {
   applications: {
     label: "Aplicações Recebidas",
@@ -76,7 +75,7 @@ export function FunilCandidatosEmpresa() {
               bottom: 5,
               left: 20,
             }}
-            layout="vertical" // leitura horizontal das labesl
+            layout="vertical"
           >
             <CartesianGrid horizontal={false} />
             <YAxis
