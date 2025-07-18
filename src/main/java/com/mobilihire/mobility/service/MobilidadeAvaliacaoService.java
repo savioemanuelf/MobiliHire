@@ -1,6 +1,6 @@
 package com.mobilihire.mobility.service;
 
-import com.mobilihire.mobility.domain.DTO.MobilidadeAvaliacaoDTO; // O DTO que define a estrutura do seu relatório
+import com.mobilihire.mobility.domain.DTO.MobilidadeAvaliacaoDTO; 
 import com.smarthirepro.core.service.impl.AvaliacaoLlmImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

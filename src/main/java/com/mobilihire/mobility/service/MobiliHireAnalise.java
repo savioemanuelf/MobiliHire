@@ -61,7 +61,6 @@ public class MobiliHireAnalise extends AnaliseTemplate<OportunidadeInterna> {
         criterios.add("Departamento de Destino: " + oportunidade.getDepartamentoDestino());
         criterios.add("Nível de Destino: " + oportunidade.getNivelDestino());
         criterios.add("Pontuação Mínima Exigida: " + oportunidade.getPontuacaoMinima());
-
         // criterios.add("Avaliação de Desempenho Mínima: 4.0");
 
         return criterios;
