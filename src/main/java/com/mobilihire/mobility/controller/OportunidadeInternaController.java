@@ -39,9 +39,10 @@ public class OportunidadeInternaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OportunidadeInterna> buscarOportunidadePorId(@PathVariable UUID id) {
+    public ResponseEntity<OportunidadeInternaRespostaDto> buscarOportunidadePorId(@PathVariable UUID id) {
         OportunidadeInterna oportunidade = oportunidadeService.listarPorId(id);
-        return ResponseEntity.ok(oportunidade);
+        OportunidadeInternaRespostaDto oportunidadeDto = oportunidadeService.toRespostaDto(oportunidade);
+        return ResponseEntity.ok(oportunidadeDto);
     }
 
     @PostMapping

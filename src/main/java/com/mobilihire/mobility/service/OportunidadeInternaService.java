@@ -89,7 +89,7 @@ public class OportunidadeInternaService {
         }
     }
 
-    private OportunidadeInternaRespostaDto toRespostaDto(OportunidadeInterna oportunidade) {
+    public OportunidadeInternaRespostaDto toRespostaDto(OportunidadeInterna oportunidade) {
         if (oportunidade == null) {
             return null;
         }
