@@ -7,17 +7,8 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Users, Search, User, Mail, Building, ArrowLeft } from "lucide-react"
-import { mobilihireApi } from "@/api/mobilihire.api"
+import { mobilihireApi, Colaborador } from "@/api/mobilihire.api"
 import { useRouter } from "next/navigation"
-
-interface Colaborador {
-  id: string;
-  nome: string;
-  email: string;
-  departamento: string;
-  nivel: string;
-  curriculoId?: string;
-}
 
 export default function ColaboradoresPage() {
   const [colaboradores, setColaboradores] = useState<Colaborador[]>([])
@@ -129,23 +120,33 @@ export default function ColaboradoresPage() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg">{colaborador.nome}</CardTitle>
-                <Badge variant="secondary">
-                  {colaborador.nivel}
-                </Badge>
+                {colaborador.nivelAtual && (
+                  <Badge variant="secondary">
+                    {colaborador.nivelAtual}
+                  </Badge>
+                )}
               </div>
               <CardDescription>
-                <div className="flex items-center text-sm text-muted-foreground">
+                {colaborador.matricula && (
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <User className="mr-2 h-4 w-4" />
+                    {colaborador.matricula}
+                  </div>
+                )}
+                <div className="flex items-center text-sm text-muted-foreground mt-1">
                   <Mail className="mr-2 h-4 w-4" />
                   {colaborador.email}
                 </div>
+                {colaborador.departamentoAtual && (
+                  <div className="flex items-center text-sm text-muted-foreground mt-1">
+                    <Building className="mr-2 h-4 w-4" />
+                    {colaborador.departamentoAtual}
+                  </div>
+                )}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <Building className="mr-2 h-4 w-4" />
-                  {colaborador.departamento}
-                </div>
                 
                 <div className="flex gap-2 pt-2">
                   <Button 
@@ -154,13 +155,6 @@ export default function ColaboradoresPage() {
                     onClick={() => router.push(`/colaboradores/${colaborador.id}`)}
                   >
                     Ver Perfil
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => router.push(`/colaboradores/${colaborador.id}/avaliacoes`)}
-                  >
-                    Avaliações
                   </Button>
                 </div>
               </div>

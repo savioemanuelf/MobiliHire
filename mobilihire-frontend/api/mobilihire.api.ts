@@ -69,9 +69,11 @@ export interface Colaborador {
   id: string;
   nome: string;
   email: string;
-  departamento: string;
-  nivel: string;
-  curriculoId?: string;
+  matricula?: string;
+  departamentoAtual?: string;
+  cargoAtual?: string;
+  nivelAtual?: string;
+  avaliacaoDesempenho?: number;
 }
 
 export interface MobilidadeAvaliacao {

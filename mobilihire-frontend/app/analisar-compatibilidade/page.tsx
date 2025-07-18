@@ -108,54 +108,83 @@ export default function AnalisarCompatibilidadePage() {
         </Alert>
       )}
       {resultado && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-600" />
-              Resultado da Compatibilidade
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {typeof resultado === 'object' && resultado.candidates ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="px-4 py-2 text-left">Colaborador</th>
-                      <th className="px-4 py-2 text-left">Pontuação</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {resultado.candidates.map((c: any, i: number) => {
-                      // Suporta tanto score_total: "Nome: 0.61" quanto score_total: 0.61, nome: "Fulano"
-                      let nome = '';
-                      let score = '';
-                      if (typeof c.score_total === 'string' && c.score_total.includes(':')) {
-                        const parts = c.score_total.split(':');
-                        nome = parts[0];
-                        score = parts[1];
-                      } else if (typeof c === 'object' && c.nome && c.score_total) {
-                        nome = c.nome;
-                        score = c.score_total;
-                      } else {
-                        nome = '-';
-                        score = c.score_total || '-';
-                      }
-                      return (
-                        <tr key={i} className="border-b">
-                          <td className="px-4 py-2">{nome}</td>
-                          <td className="px-4 py-2">{score}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <pre className="whitespace-pre-wrap text-sm">{typeof resultado === 'string' ? resultado : JSON.stringify(resultado, null, 2)}</pre>
-            )}
-          </CardContent>
-        </Card>
+        <>
+          <div className="mb-4">
+            <p className="text-base text-muted-foreground">
+              O ranqueamento dos colaboradores abaixo foi realizado automaticamente por inteligência artificial, levando em conta os requisitos definidos na oportunidade cadastrada e as informações fornecidas pelo gestor para cada colaborador. Assim, você pode identificar rapidamente quais colaboradores têm maior aderência ao perfil desejado para a mobilidade interna.
+            </p>
+          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+                Resultado da Compatibilidade
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {typeof resultado === 'object' && resultado.candidates ? (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="px-4 py-2 text-left">Colaborador</th>
+                        <th className="px-4 py-2 text-left">Pontuação</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {resultado.candidates
+                        .slice() 
+                        .sort((a: any, b: any) => {
+                          let scoreA = 0;
+                          
+                          if (typeof a.score_total === 'string' && a.score_total.includes(':')) {
+                            scoreA = parseFloat(a.score_total.split(':')[1]);
+                          } else if (typeof a.score_total === 'number') {
+                            scoreA = a.score_total;
+                          } else if (typeof a.score_total === 'string') {
+                            scoreA = parseFloat(a.score_total);
+                          }
+
+                          let scoreB = 0;
+                          if (typeof b.score_total === 'string' && b.score_total.includes(':')) {
+                            scoreB = parseFloat(b.score_total.split(':')[1]);
+                          } else if (typeof b.score_total === 'number') {
+                            scoreB = b.score_total;
+                          } else if (typeof b.score_total === 'string') {
+                            scoreB = parseFloat(b.score_total);
+                          }
+                          return scoreB - scoreA;
+                        })
+                        .map((c: any, i: number) => {
+                          let nome = '';
+                          let score = '';
+                          if (typeof c.score_total === 'string' && c.score_total.includes(':')) {
+                            const parts = c.score_total.split(':');
+                            nome = parts[0];
+                            score = parts[1];
+                          } else if (typeof c === 'object' && c.nome && c.score_total) {
+                            nome = c.nome;
+                            score = c.score_total;
+                          } else {
+                            nome = '-';
+                            score = c.score_total || '-';
+                          }
+                          return (
+                            <tr key={i} className="border-b">
+                              <td className="px-4 py-2">{nome}</td>
+                              <td className="px-4 py-2">{score}</td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <pre className="whitespace-pre-wrap text-sm">{typeof resultado === 'string' ? resultado : JSON.stringify(resultado, null, 2)}</pre>
+              )}
+            </CardContent>
+          </Card>
+        </>
       )}
     </div>
   );
